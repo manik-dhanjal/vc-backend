@@ -31,7 +31,7 @@ app.get("/:room",(req,res)=>{
     res.render("room",{roomId:req.params.room})
 })
 
-var server=app.listen(8000,()=>{
+var server=app.listen(process.env.PORT || 8000,()=>{
     console.log("server activated at PORT 8000")
 })
 
@@ -44,7 +44,8 @@ io.on("connection",socket=>{
  socket.on("join-room",(roomId,userId)=>{
    socket.join(roomId)
    socket.to(roomId).broadcast.emit("user-added",userId)
+   socket.on("disconnect",()=>{
+       socket.to(roomId).broadcast.emit("user-disconnected",userId)
+    })
  })
-
-   socket.on("disconnect",()=>console.log("disconnected"))
 })

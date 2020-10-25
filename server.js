@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json());
 
 app.get("/",(req,res)=>{
-    res.redirect(`/${uuidv4()}`)
+    res.send("You are not allowed here")
 })
 
 app.post("/create-meet",(req,res)=>{
@@ -26,10 +26,6 @@ app.post("/join-meet",(req,res)=>{
      res.send("hi")
  })
 
-app.get("/:room",(req,res)=>{
-    console.log(req.params.room)
-    res.render("room",{roomId:req.params.room})
-})
 
 var server=app.listen(process.env.PORT || 8000,()=>{
     console.log("server activated at PORT 8000")
